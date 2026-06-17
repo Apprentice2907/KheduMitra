@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.core.logging import logger
-from app.core.exceptions import KissanBotException, kissanbot_exception_handler, global_exception_handler
+from app.core.exceptions import KheduMitraException, khedumitra_exception_handler, global_exception_handler
 from app.api.router import api_router
 
 import time
@@ -15,7 +15,7 @@ from app.db.connection import get_db_connection
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="Backend for Kisan Voice Bot - AI Voice Helpline for Farmers",
+    description="Backend for KheduMitra - AI Voice Helpline for Farmers",
 )
 
 # Mount static files for local testing UI
@@ -49,7 +49,7 @@ async def prometheus_middleware(request: Request, call_next):
         REQUEST_LATENCY.labels(method=method, endpoint=endpoint).observe(latency)
 
 # Exception Handlers
-app.add_exception_handler(KissanBotException, kissanbot_exception_handler)
+app.add_exception_handler(KheduMitraException, khedumitra_exception_handler)
 app.add_exception_handler(Exception, global_exception_handler)
 
 # Routers
@@ -57,11 +57,11 @@ app.include_router(api_router, prefix="/api/v1")
 
 @app.on_event("startup")
 async def startup_event():
-    logger.info("Starting up Kisan Voice Bot FastAPI server")
+    logger.info("Starting up KheduMitra FastAPI server")
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    logger.info("Shutting down Kisan Voice Bot FastAPI server")
+    logger.info("Shutting down KheduMitra FastAPI server")
 
 @app.get("/health", tags=["Health"])
 async def health_check():

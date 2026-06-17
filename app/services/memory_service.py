@@ -29,7 +29,7 @@ Query: {query}
             return {}
         try:
             hashed = hash_phone(phone)
-            data = await self.redis.get(f"kissan:{hashed}:memory")
+            data = await self.redis.get(f"khedumitra:{hashed}:memory")
             return json.loads(data) if data else {}
         except Exception as e:
             logger.error(f"Error reading memory for {phone}: {str(e)}")
@@ -52,7 +52,7 @@ Query: {query}
                 return # Nothing to update
                 
             hashed = hash_phone(phone)
-            key = f"kissan:{hashed}:memory"
+            key = f"khedumitra:{hashed}:memory"
             
             # Get existing to merge
             existing = await self.get_farmer_memory(phone)

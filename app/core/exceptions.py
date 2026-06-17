@@ -4,12 +4,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class KissanBotException(Exception):
+class KheduMitraException(Exception):
     def __init__(self, message: str, status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR):
         self.message = message
         self.status_code = status_code
 
-class ExternalAPIException(KissanBotException):
+class ExternalAPIException(KheduMitraException):
     pass
 
 async def global_exception_handler(request: Request, exc: Exception):
@@ -19,8 +19,8 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": "Internal server error occurred.", "error": str(exc)}
     )
 
-async def kissanbot_exception_handler(request: Request, exc: KissanBotException):
-    logger.warning(f"KissanBot Exception: {exc.message}")
+async def khedumitra_exception_handler(request: Request, exc: KheduMitraException):
+    logger.warning(f"KheduMitra Exception: {exc.message}")
     return JSONResponse(
         status_code=exc.status_code,
         content={"detail": exc.message}

@@ -140,7 +140,7 @@ class WeatherService:
             logger.info("No data.gov.in API key, falling back to Open-Meteo for weather.")
             return await self.get_forecast(district, days=3)
 
-        cache_key = f"kissan:cache:weather:imd:{district}".lower()
+        cache_key = f"khedumitra:cache:weather:imd:{district}".lower()
         
         try:
             cached = await self.redis.get(cache_key)

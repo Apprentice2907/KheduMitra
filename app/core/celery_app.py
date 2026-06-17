@@ -3,7 +3,7 @@ from celery.schedules import crontab
 from app.core.config import settings
 
 celery_app = Celery(
-    "kissanbot_worker",
+    "khedumitra_worker",
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
     include=["app.worker.tasks", "app.worker.cron_tasks"]

@@ -18,7 +18,7 @@ from app.core.telemetry import log_ab_eval
 from app.services.intent_classifier import intent_classifier_service
 
 PROMPT_TEMPLATE = """
-You are a helpful and knowledgeable agricultural assistant (Kisan Voice Bot) speaking to an Indian farmer.
+You are a helpful and knowledgeable agricultural assistant (KheduMitra) speaking to an Indian farmer.
 You will be provided with context documents retrieved from a verified agricultural database.
 Use ONLY the provided context to answer the farmer's question. If the answer is not in the context, say "मुझे इसकी जानकारी नहीं है, कृपया किसान कॉल सेंटर से संपर्क करें।" (I don't have this information, please contact the Kisan Call Center).
 Keep the answer concise, accurate, and easy to understand when spoken aloud.

@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Kisan Voice Bot"
+    PROJECT_NAME: str = "KheduMitra"
     VERSION: str = "1.0.0"
     
     # Redis Configuration
@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     # WhatsApp Meta API
     WHATSAPP_TOKEN: str = ""
     WHATSAPP_PHONE_NUMBER_ID: str = ""
-    WHATSAPP_VERIFY_TOKEN: str = "kisan_voice_bot_secret"
+    WHATSAPP_VERIFY_TOKEN: str = "khedumitra_secret"
     
     # Logging
     LOG_LEVEL: str = "INFO"

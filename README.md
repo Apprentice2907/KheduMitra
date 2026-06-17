@@ -1,4 +1,4 @@
-# Kisan Voice Bot
+# KheduMitra
 
 A production-grade multilingual agricultural AI assistant for Indian farmers.
 
@@ -76,7 +76,7 @@ graph TD
 
 | Variable | Description | Default / Example |
 | -------- | ----------- | ----------------- |
-| `PROJECT_NAME` | Name of the project | `Kisan Voice Bot` |
+| `PROJECT_NAME` | Name of the project | `KheduMitra` |
 | `REDIS_URL` | Redis connection URL | `redis://localhost:6379/0` |
 | `TWILIO_ACCOUNT_SID` | Twilio SID | |
 | `TWILIO_AUTH_TOKEN` | Twilio Token | |

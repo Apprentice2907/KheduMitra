@@ -49,13 +49,13 @@ async def handle_ussd(
     
     if not text:
         # First screen
-        response = "CON Welcome to Kisan Voice Bot.\nReply with your question or type 0 to exit."
+        response = "CON Welcome to KheduMitra.\nReply with your question or type 0 to exit."
         return PlainTextResponse(response)
         
     if latest_input == "0":
         # Exit
         await ussd_redis.delete(session_key)
-        return PlainTextResponse("END Thank you for using Kisan Voice Bot.")
+        return PlainTextResponse("END Thank you for using KheduMitra.")
         
     # Check if we are paginating an existing response
     session_data = await ussd_redis.get(session_key)

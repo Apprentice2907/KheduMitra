@@ -15,7 +15,7 @@ def test_whatsapp_webhook_verification(client):
         params={
             "hub.mode": "subscribe",
             "hub.challenge": "12345",
-            "hub.verify_token": "kisan_voice_bot_secret"
+            "hub.verify_token": "khedumitra_secret"
         }
     )
     assert response.status_code == 200

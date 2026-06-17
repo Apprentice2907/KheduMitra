@@ -50,7 +50,7 @@ async def get_stats():
         hit_rate = (int(cache_hits) / total_calls_int) * 100 if total_calls_int > 0 else 0
         
         # Get district coverage map data from DB (cached)
-        district_coverage_key = "kissan:cache:district_coverage"
+        district_coverage_key = "khedumitra:cache:district_coverage"
         district_coverage = await r.get(district_coverage_key)
         
         if not district_coverage:
