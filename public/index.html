@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KissanBot Voice Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #1b5e20;
+        }
+        button.recording {
+            background-color: #d32f2f;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #555;
+            min-height: 20px;
+        }
+        audio {
+            margin-top: 20px;
+            width: 100%;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>KissanBot Voice Test</h1>
+    <p>Talk directly to the AI Helpline from your browser!</p>
+    
+    <div class="controls">
+        <select id="languageSelect">
+            <option value="hi">Hindi (हिंदी)</option>
+            <option value="gu">Gujarati (ગુજરાતી)</option>
+            <option value="mr">Marathi (मराठी)</option>
+        </select>
+        
+        <button id="recordBtn">🎤 Start Recording</button>
+    </div>
+    
+    <div class="status" id="statusText">Ready</div>
+    <audio id="audioPlayer" controls></audio>
+</div>
+
+<script>
+    let mediaRecorder;
+    let audioChunks = [];
+    let isRecording = false;
+    
+    const recordBtn = document.getElementById('recordBtn');
+    const statusText = document.getElementById('statusText');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const languageSelect = document.getElementById('languageSelect');
+
+    recordBtn.addEventListener('click', async () => {
+        if (!isRecording) {
+            // Start Recording
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = sendAudioToServer;
+                
+                mediaRecorder.start();
+                isRecording = true;
+                recordBtn.textContent = '⏹️ Stop Recording';
+                recordBtn.classList.add('recording');
+                statusText.textContent = 'Recording your question...';
+                audioPlayer.style.display = 'none';
+            } catch (err) {
+                console.error("Microphone access denied:", err);
+                statusText.textContent = 'Microphone access is required.';
+            }
+        } else {
+            // Stop Recording
+            mediaRecorder.stop();
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+            isRecording = false;
+            recordBtn.textContent = '🎤 Start Recording';
+            recordBtn.classList.remove('recording');
+            statusText.textContent = 'Processing... Please wait.';
+        }
+    });
+
+    async function sendAudioToServer() {
+        // Create a blob from the chunks
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'recording.wav');
+        formData.append('lang', languageSelect.value);
+        
+        try {
+            const response = await fetch('/api/v1/test/voice-chat', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                const blob = await response.blob();
+                const audioUrl = URL.createObjectURL(blob);
+                audioPlayer.src = audioUrl;
+                audioPlayer.style.display = 'block';
+                audioPlayer.play();
+                statusText.textContent = 'Response received!';
+            } else {
+                const errText = await response.text();
+                statusText.textContent = 'Error: ' + errText;
+            }
+        } catch (err) {
+            console.error("Upload failed", err);
+            statusText.textContent = 'Failed to connect to server.';
+        }
+    }
+</script>
+
+</body>
+</html>

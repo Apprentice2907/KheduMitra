@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+*.pkl
+models/
+data/raw/
+*.wav
+*.mp3
+.pytest_cache/
+*.egg-info/
+dist/
+venv/
+.venv/
+redis-data/

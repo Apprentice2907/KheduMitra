@@ -1,0 +1,30 @@
+[
+    {
+        "id": "doc_1",
+        "category": "scheme",
+        "title": "PM-Kisan Samman Nidhi",
+        "content": "The Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) is a central sector scheme that provides income support to all landholding farmers' families in the country to supplement their financial needs for procuring various inputs related to agriculture and allied activities as well as domestic needs. Under the Scheme, an amount of Rs. 6000/- per year is transferred in three 4-monthly installments of Rs. 2000/- directly into the bank accounts of the beneficiaries.",
+        "metadata": {"tags": ["finance", "subsidy"]}
+    },
+    {
+        "id": "doc_2",
+        "category": "disease",
+        "title": "Cotton Leaf Curl Virus (CLCuV)",
+        "content": "Cotton Leaf Curl Virus is a severe disease affecting cotton. Symptoms include upward or downward curling of leaf margins, thickened veins, and enations on the underside of leaves. It is transmitted by the whitefly (Bemisia tabaci). Management involves using resistant varieties, uprooting and destroying infected plants, and controlling the whitefly population using recommended insecticides like Imidacloprid.",
+        "metadata": {"crop": "cotton", "tags": ["disease", "whitefly"]}
+    },
+    {
+        "id": "doc_3",
+        "category": "disease",
+        "title": "Wheat Rust (Yellow Rust/पीला रतुआ)",
+        "content": "Yellow rust is a major fungal disease of wheat in northern India. Symptoms include yellow stripes or pustules on the leaves (गेहूं में पीले धब्बे). It causes severe yield loss. For treatment, spray Propiconazole 25 EC @ 0.1% or Tebuconazole 250 EC @ 0.1% as soon as symptoms appear. Grow resistant varieties like PBW 723 or HD 2967.",
+        "metadata": {"crop": "wheat", "tags": ["disease", "fungus", "yellow spots"]}
+    },
+    {
+        "id": "doc_4",
+        "category": "scheme",
+        "title": "PM Fasal Bima Yojana (PMFBY)",
+        "content": "PMFBY provides a comprehensive insurance cover against failure of the crop thus helping in stabilizing the income of the farmers. The scheme covers all Food & Oilseeds crops and Annual Commercial/Horticultural Crops for which past yield data is available. The premium to be paid by farmers is very low: 2% for all Kharif crops, 1.5% for all Rabi crops, and 5% for commercial/horticultural crops.",
+        "metadata": {"tags": ["insurance", "crop failure"]}
+    }
+]

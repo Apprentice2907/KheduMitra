@@ -1,0 +1,37 @@
+name: Nightly Data Scrapers
+
+on:
+  schedule:
+    # Run at 00:00 UTC (5:30 AM IST) daily
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  scrape_and_ingest:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Agmarknet Mandi Scraper
+      env:
+        AGMARKNET_API_KEY: ${{ secrets.AGMARKNET_API_KEY }}
+        POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+      run: python scripts/scrape_mandi.py
+
+    - name: Run Fertilizer Price Scraper
+      env:
+        POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+      run: python scripts/scrape_fertilizer.py
