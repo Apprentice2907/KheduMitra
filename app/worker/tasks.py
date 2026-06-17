@@ -73,12 +73,16 @@ def process_voice_query(call_sid: str, recording_url: str, from_number: str, lan
         if not audio_bytes:
             raise ValueError("Failed to download audio bytes")
 
-        sarvam_lang_map = {
-            "hi": "hi-IN",
-            "gu": "gu-IN",
-            "mr": "mr-IN"
+        # Gujarat-first language map — priority: Gujarati → Hindi → English
+        LANGUAGE_MAP = {
+            "gu": "gu-IN",   # Gujarati — PRIMARY for Gujarat farmers
+            "hi": "hi-IN",   # Hindi
+            "en": "en-IN",   # English
+            "mr": "mr-IN",   # Marathi (legacy support)
         }
-        sarvam_lang = sarvam_lang_map.get(lang, "hi-IN")
+        DEFAULT_LANGUAGE = "gu-IN"
+        sarvam_lang = LANGUAGE_MAP.get(lang, DEFAULT_LANGUAGE)
+
         
         # 2. Transcribe
         t0 = time.time()
@@ -155,12 +159,15 @@ def process_voice_query(call_sid: str, recording_url: str, from_number: str, lan
         record_latency(total_latency_ms)
         
         # 5. Call Modification
+        # Gujarat-first voices
         voices = {
-            "hi": "Polly.Aditi",
-            "gu": "Polly.Kajal",
-            "mr": "Polly.Kajal"
+            "gu": "Polly.Kajal",   # Gujarati (primary)
+            "hi": "Polly.Aditi",   # Hindi
+            "en": "Polly.Joanna",  # English
+            "mr": "Polly.Kajal",   # Marathi (Kajal best available)
         }
-        voice = voices.get(lang, "Polly.Aditi")
+        voice = voices.get(lang, "Polly.Kajal")  # Default Gujarati voice
+
         
         if settings.TWILIO_ACCOUNT_SID and settings.TWILIO_AUTH_TOKEN:
             twilio_client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
